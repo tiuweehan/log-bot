@@ -30,9 +30,15 @@ func main() {
 		log.Panic(err)
 	}
 
-	rawMessageText, err := ioutil.ReadAll(os.Stdin)
+	rawMessageBody, err := ioutil.ReadAll(os.Stdin)
 
-	messageText := fmt.Sprintf("[%v]\n%v", host, string(rawMessageText))
+	rawMessageText := string(rawMessageBody)
+
+	if rawMessageText == "" {
+		return
+	}
+
+	messageText := fmt.Sprintf("[%v]\n%v", host, rawMessageText)
 
 	for _, rawUserId := range rawUserIds {
 		userId, err := strconv.ParseInt(rawUserId, 10,  64)
